@@ -9,7 +9,7 @@ import Foundation
 
 final class NotionClient: NotionProtocol {
     
-    private let apiKey: String = "ntn_b72368686074JZHMHcBqmN5QxcAinfBfc2SrPkMsvAD9Hn"
+    private let apiKey: String = ProcessInfo.processInfo.environment["NOTION_TOKEN"] ?? "Unavailable"
     private let baseURL: String = "https://api.notion.com/v1"
     private let notionVersion: String = "2022-06-28"
     
