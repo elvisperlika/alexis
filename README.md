@@ -1,5 +1,7 @@
 # ``Alexis``
 
+![Notion + Swift](Resources/alexis.png)
+
 Unofficial iOS/macOS SDK for the Notion API.
 
 ## Overview
@@ -9,5 +11,3 @@ Unofficial iOS/macOS SDK for the Notion API.
 ### Users
 
 ``let users = try await client?.getUsers()``
-
-## Name
