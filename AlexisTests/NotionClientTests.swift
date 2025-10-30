@@ -8,7 +8,7 @@
 import XCTest
 @testable import Alexis
 
-final class AlexisTests: XCTestCase {
+final class NotionClientTests: XCTestCase {
     
     var client: NotionClient? = nil
     

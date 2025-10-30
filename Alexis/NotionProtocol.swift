@@ -10,3 +10,9 @@ protocol NotionProtocol {
     func getUsers() async throws -> [User]
     
 }
+
+protocol UserProtocol {}
+
+protocol DatabaseProtocol {}
+
+protocol ItemProtocol {}
