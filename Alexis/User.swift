@@ -7,11 +7,12 @@
 
 import Foundation
 
-struct User {
-    let avatarUrl: String
-    let name: String
-    let email: String
-    let type: String
+struct User: UserProtocol {
+    
+    var avatarUrl: String
+    var name: String
+    var email: String
+    var type: String
     
     init(avatarUrl: String, name: String, email: String, type: String) {
         self.avatarUrl = avatarUrl

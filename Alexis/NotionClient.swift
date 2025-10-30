@@ -9,9 +9,18 @@ import Foundation
 
 final class NotionClient: NotionProtocol {
     
-    private let apiKey: String = ProcessInfo.processInfo.environment["NOTION_TOKEN"] ?? "Unavailable"
-    private let baseURL: String = "https://api.notion.com/v1"
-    private let notionVersion: String = "2022-06-28"
+    var baseURL: String
+    var notionVersion: String
+    var apiKey: String
+
+    init(apiKey: String,
+         baseURL: String = Config.Notion.baseURL,
+         version: String = Config.Notion.APIVersion
+    ) {
+        self.apiKey = apiKey
+        self.baseURL = baseURL
+        self.notionVersion = version
+    }
     
     private var defaultHeaders: [String: String] {
         return [
@@ -32,7 +41,7 @@ final class NotionClient: NotionProtocol {
         return request
     }
     
-    func getUsers() async throws -> [User] {
+    func getUsers() async throws -> [UserProtocol] {
         let url = URL(string: "\(baseURL)/users")!
         let request = createRequest(url: url, method: "GET")
         

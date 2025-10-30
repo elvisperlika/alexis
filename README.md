@@ -11,3 +11,4 @@ Unofficial iOS/macOS SDK for the Notion API.
 ### Users
 
 ``let users = try await client?.getUsers()``
+

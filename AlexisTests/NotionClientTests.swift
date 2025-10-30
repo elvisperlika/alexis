@@ -13,8 +13,8 @@ final class NotionClientTests: XCTestCase {
     var client: NotionClient? = nil
     
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        client = NotionClient()
+        let apiKey: String = ProcessInfo.processInfo.environment["NOTION_TOKEN"] ?? "Unavailable"
+        client = NotionClient(apiKey: apiKey)
     }
 
     override func tearDownWithError() throws {
