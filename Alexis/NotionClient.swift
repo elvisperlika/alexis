@@ -9,9 +9,31 @@ import Foundation
 
 final class NotionClient: NotionProtocol {
     
-    private let apiKey: String = ProcessInfo.processInfo.environment["NOTION_TOKEN"] ?? "Unavailable"
-    private let baseURL: String = "https://api.notion.com/v1"
-    private let notionVersion: String = "2022-06-28"
+    var baseURL: String
+    var notionVersion: String
+    var apiKey: String
+
+    init(apiKey: String,
+         baseURL: String = Config.Notion.baseURL,
+         version: String = Config.Notion.APIVersion
+    ) throws {
+        guard apiKey.count >= 16 else {
+            throw NotionError
+                .InvalidAPIKey("API key must be at least 16 characters long")
+        }
+        
+        let versionPattern = #"^\d{4}-\d{2}-\d{2}$"#
+        let versionRegex = try NSRegularExpression(pattern: versionPattern)
+        let versionRange = NSRange(version.startIndex..., in: version)
+        
+        guard versionRegex.firstMatch(in: version, range: versionRange) != nil else {
+            throw NotionError.InvalidVersionFormat("Version must be in format YYYY-MM-DD")
+        }
+        
+        self.apiKey = apiKey
+        self.baseURL = baseURL
+        self.notionVersion = version
+    }
     
     private var defaultHeaders: [String: String] {
         return [
@@ -32,7 +54,7 @@ final class NotionClient: NotionProtocol {
         return request
     }
     
-    func getUsers() async throws -> [User] {
+    func getUsers() async throws -> [UserProtocol] {
         let url = URL(string: "\(baseURL)/users")!
         let request = createRequest(url: url, method: "GET")
         
