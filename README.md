@@ -21,7 +21,7 @@ This SDK requires a [Notion Integration](https://www.notion.so/my-integrations).
     
 4. Create your Notion Client with the variable as parameter:
     ```swift
-    let apiKey: String = ProcessInfo.processInfo.environment["NOTION_TOKEN"] ?? "Missing env. variable"
+    let apiKey: String = ProcessInfo.processInfo.environment["NOTION_TOKEN"] ?? "Unavailable"
     client = NotionClient(apiKey: apiKey)
     ```
 
