@@ -15,7 +15,7 @@ jobs:
       - name: Install Swift
         uses: fwal/setup-swift@v1
         with:
-          swift-version: '5.9'
+          swift-version: '6.2'
 
       - name: Resolve Dependencies
         run: swift package resolve
