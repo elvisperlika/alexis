@@ -2,7 +2,12 @@ name: CI
 
 on:
   push:
+    branches:
+    tags:
+      - 'v*'
   pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -29,37 +34,27 @@ jobs:
         run: swift test
     
   release:
+    needs: test
     runs-on: macos-latest
     if: startsWith(github.ref, 'refs/tags/')
-    needs: test
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
+      
       - name: Setup Swift
         uses: swift-actions/setup-swift@v2
-
-      - name: Build Release Binary
+      
+      - name: Build Release
         run: swift build -c release
-
-      - name: Get binary name
-        id: binary
-        run: |
-          BINARY_NAME=$(swift package dump-package | python3 -c "import sys, json; print(json.load(sys.stdin)['products'][0]['name'])")
-          echo "name=$BINARY_NAME" >> $GITHUB_OUTPUT
-
-      - name: Create Archive
-        run: |
-          cd .build/release
-          zip -r ../../${{ steps.binary.outputs.name }}-macos.zip ${{ steps.binary.outputs.name }}
-
+      
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ steps.binary.outputs.name }}-macos.zip
+          files: |
+            .build/release/*
           draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
+          
