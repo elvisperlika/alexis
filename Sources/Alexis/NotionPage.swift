@@ -1,15 +1,19 @@
 import Foundation
 
+struct NotionSearchResponse: Codable {
+  let results: NotionPages
+}
+
 struct NotionPage: Codable {
   let archived: Bool
   let cover: String?
-  let createdBy: NotionUser
+  let createdBy: PageUser
   let createdTime: String
   let icon: String?
   let id: String
   let inTrash: Bool
   let isLocked: Bool
-  let lastEditedBy: NotionUser
+  let lastEditedBy: PageUser
   let lastEditedTime: String
   let object: String
   let parent: NotionParent
@@ -36,7 +40,7 @@ struct NotionPage: Codable {
   }
 }
 
-struct NotionUser: Codable {
+struct PageUser: Codable {
   let id: String
   let object: String
 }
@@ -85,5 +89,3 @@ struct NotionTextContent: Codable {
   let content: String
   let link: String?
 }
-
-typealias NotionPages = [NotionPage]

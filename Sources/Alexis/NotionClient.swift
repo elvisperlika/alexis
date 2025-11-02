@@ -1,7 +1,7 @@
 import Foundation
 
 @available(macOS 10.15.0, *)
-final class NotionClient: NotionProtocol {
+final class NotionClient: NotionAPI {
 
   var baseURL: String
   var notionVersion: String
@@ -56,7 +56,7 @@ final class NotionClient: NotionProtocol {
     return request
   }
 
-  func getUsers() async throws -> Users {
+  func fetchUsers() async throws -> NotionUsers {
     let url = URL(string: "\(baseURL)/users")!
     let request = self.createRequest(url: url, method: "GET")
 
@@ -68,21 +68,12 @@ final class NotionClient: NotionProtocol {
       throw URLError(.badServerResponse)
     }
 
-    let jsonResponse =
-      try JSONSerialization
-      .jsonObject(with: data) as? [String: Any] ?? [:]
-
-    guard let results = jsonResponse["results"] as? [[String: Any]] else {
-      return []
-    }
-
-    let users = results.compactMap { userDict -> User? in
-      return User(from: userDict)
-    }
-    return users
+    let decoder = JSONDecoder()
+    let usersResponse = try decoder.decode(UserListResponse.self, from: data)
+    return usersResponse.results
   }
 
-  func search() async throws -> NotionPages {
+  func fetchPages() async throws -> NotionPages {
     let url = URL(string: "\(baseURL)/search")!
     let request = self.createRequest(url: url, method: "POST")
 
@@ -95,10 +86,6 @@ final class NotionClient: NotionProtocol {
     }
 
     let decoder = JSONDecoder()
-    struct NotionSearchResponse: Codable {
-      let results: NotionPages
-    }
-
     let searchResponse = try decoder.decode(NotionSearchResponse.self, from: data)
     return searchResponse.results
   }

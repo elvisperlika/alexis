@@ -20,11 +20,13 @@ This SDK requires a [Notion Integration](https://www.notion.so/my-integrations).
     NOTION_TOKEN=your_integration_key_here
     ```
 
-4. Create your Notion Client with the variable as parameter:
+4. Create your Notion Client with the API key:
 
     ```swift
-    let apiKey: String = ProcessInfo.processInfo.environment["NOTION_TOKEN"] ?? "Unavailable"
-    client = NotionClient(apiKey: apiKey)
+    guard let apiKey: String = ProcessInfo.processInfo.environment["NOTION_TOKEN"] else {
+      fatalError("Missing NOTION_TOKEN environment variable")
+    }
+    let client = try NotionClient(apiKey: apiKey)
     ```
 
 ## Guide
@@ -40,9 +42,25 @@ pages or databases you have manually shared with it.
 To get the list of users in your Notion workspace, use the following code:
 
 ```swift
-let users = try await client?.getUsers()
+let users: [NotionUser]? = try await client?.fetchUsers()
+```
+
+Filter by user type:
+
+```swift
+/// Get only bots
+let bots: [NotionUser]? = try await client?.fetchUsers().bots()
+
+/// Get only persons
+let persons: [NotionUser]? = try await client?.fetchUsers().persons()
 ```
 
 ### Pages
+
+Get all pages shared with the integration:
+
+```swift
+let pages = try await client?.fetchPages()
+```
 
 ### Databases

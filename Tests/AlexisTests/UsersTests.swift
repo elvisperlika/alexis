@@ -1,0 +1,41 @@
+import Foundation
+import SwiftDotenv
+import XCTest
+
+@testable import Alexis
+
+class UsersTests: XCTestCase {
+
+  var client: NotionClient?
+
+  override func setUpWithError() throws {
+    client = try setupClient()
+  }
+
+  func testGetAllUsers() async throws {
+    let users: [NotionUser]? = try await client?.fetchUsers()
+    XCTAssertNotNil(users)
+    XCTAssertFalse(users?.isEmpty ?? true)
+
+    let names: [String]? = users?.map { user in user.name ?? "Unnamed" }
+    XCTAssertEqual(
+      Set(names ?? []),
+      Set(["Elvis Unibo", "Alexis", "Portfolio"])
+    )
+  }
+
+  func testGetOnlyBots() async throws {
+    let bots: [NotionUser]? = try await client?.fetchUsers().bots()
+    let botsNames = bots?.map({ bot in bot.name ?? "Unnamed" })
+    XCTAssertNotNil(bots)
+    XCTAssertEqual(Set(botsNames ?? []), Set(["Alexis", "Portfolio"]))
+  }
+
+  func testGetOnlyPersons() async throws {
+    let users: [NotionUser]? = try await client?.fetchUsers().persons()
+    let personsNames = users?.map({ person in person.name ?? "Unnamed" })
+    XCTAssertNotNil(personsNames)
+    XCTAssertEqual(Set(personsNames ?? []), Set(["Elvis Unibo"]))
+  }
+
+}
