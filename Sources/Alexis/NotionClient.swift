@@ -63,7 +63,7 @@ final class NotionClient: NotionAPI {
     let (data, response) = try await URLSession.shared.data(for: request)
 
     guard let httpResponse = response as? HTTPURLResponse,
-      httpResponse.statusCode == 200
+      (200...299).contains(httpResponse.statusCode)
     else {
       throw URLError(.badServerResponse)
     }
@@ -80,7 +80,7 @@ final class NotionClient: NotionAPI {
     let (data, response) = try await URLSession.shared.data(for: request)
 
     guard let httpResponse = response as? HTTPURLResponse,
-      httpResponse.statusCode == 200
+      (200...299).contains(httpResponse.statusCode)
     else {
       throw URLError(.badServerResponse)
     }

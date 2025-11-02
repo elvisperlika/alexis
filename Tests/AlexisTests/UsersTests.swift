@@ -20,9 +20,7 @@ class UsersTests: XCTestCase {
     let names: [String]? = users?.map { user in user.name ?? "Unnamed" }
     XCTAssertEqual(
       Set(names ?? []),
-      Optional([
-        "Elvis Unibo", "Alexis", "Portfolio",
-      ])
+      Set(["Elvis Unibo", "Alexis", "Portfolio"])
     )
   }
 

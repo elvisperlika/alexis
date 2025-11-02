@@ -60,7 +60,7 @@ let persons: [NotionUser]? = try await client?.fetchUsers().persons()
 Get all pages shared with the integration:
 
 ```swift
-let pages = try await client?.fetchNotionPages()
+let pages = try await client?.fetchPages()
 ```
 
 ### Databases
