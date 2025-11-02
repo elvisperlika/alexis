@@ -6,6 +6,7 @@ Unofficial iOS/macOS SDK for the Notion API.
 
 ## Overview
 
+This SDK provides a Swift interface to interact with the Notion API.
 
 ## Setup
 
@@ -15,11 +16,12 @@ This SDK requires a [Notion Integration](https://www.notion.so/my-integrations).
 2. Copy the **Integration Key**.  
 3. Save it as an environment variable in your codebase:
 
-    ```bash
+    ```swift
     NOTION_TOKEN=your_integration_key_here
     ```
-    
+
 4. Create your Notion Client with the variable as parameter:
+
     ```swift
     let apiKey: String = ProcessInfo.processInfo.environment["NOTION_TOKEN"] ?? "Unavailable"
     client = NotionClient(apiKey: apiKey)
@@ -28,17 +30,19 @@ This SDK requires a [Notion Integration](https://www.notion.so/my-integrations).
 ## Guide
 
 Note: this SDK requires a Notion Integration.
-Create an integration in Notion, copy its key, 
+Create an integration in Notion, copy its key,
 and save it as an environment variable in your codebase.
-Keep in mind that the integration can only access 
+Keep in mind that the integration can only access
 pages or databases you have manually shared with it.
-
 
 ### Workspace's users
 
-``let users = try await client?.getUsers()``
+To get the list of users in your Notion workspace, use the following code:
+
+```swift
+let users = try await client?.getUsers()
+```
 
 ### Pages
 
 ### Databases
-

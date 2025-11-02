@@ -1,0 +1,4 @@
+--indent 2
+--maxwidth 80
+--self insert
+--stripunusedargs closure-only
