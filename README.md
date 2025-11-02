@@ -1,11 +1,10 @@
 # ``Alexis``
 
 [![CI](https://github.com/elvisperlika/alexis/workflows/CI/badge.svg)](https://github.com/elvisperlika/alexis/actions)
-![Swift](https://img.shields.io/badge/Swift-6.1-brightgreen.svg)
+![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)
 ![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20macOS-lightgrey.svg)
 ![License](https://img.shields.io/github/license/elvisperlika/alexis)
 ![SPM](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)
-![Release](https://img.shields.io/badge/Version-1.0.0-blue.svg)
 
 ![Notion + Swift](Resources/alexis.png)
 
@@ -29,10 +28,11 @@ This SDK requires a [Notion Integration](https://www.notion.so/my-integrations).
 
 4. Add the SDK to your project:
 
-- url: "https://github.com/elvisperlika/alexis.git"
-- version: "1.0.0"
-
-1. Create your Notion Client with the API key:
+    ```swift
+    .package(url: "https://github.com/elvisperlika/alexis.git", from: "1.0.0")
+    ```
+  
+5. Create your Notion Client with the API key:
 
     ```swift
     guard let apiKey: String = ProcessInfo.processInfo.environment["NOTION_TOKEN"] else {
