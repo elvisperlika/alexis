@@ -12,10 +12,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Swift
-        uses: fwal/setup-swift@v1
-        with:
-          swift-version: '6.2'
+      - uses: swift-actions/setup-swift@v2
+      - name: Get swift version
+        run: swift --version
 
       - name: Resolve Dependencies
         run: swift package resolve
