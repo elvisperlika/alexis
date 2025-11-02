@@ -1,10 +1,11 @@
 # ``Alexis``
 
 [![CI](https://github.com/elvisperlika/alexis/workflows/CI/badge.svg)](https://github.com/elvisperlika/alexis/actions)
-![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)
+![Swift](https://img.shields.io/badge/Swift-6.1-brightgreen.svg)
 ![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20macOS-lightgrey.svg)
 ![License](https://img.shields.io/github/license/elvisperlika/alexis)
 ![SPM](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)
+![Release](https://img.shields.io/badge/Version-1.0.0-blue.svg)
 
 ![Notion + Swift](Resources/alexis.png)
 
