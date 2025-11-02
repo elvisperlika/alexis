@@ -1,5 +1,11 @@
 # ``Alexis``
 
+[![CI](https://github.com/elvisperlika/alexis/workflows/CI/badge.svg)](https://github.com/elvisperlika/alexis/actions)
+![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)
+![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20macOS-lightgrey.svg)
+![License](https://img.shields.io/github/license/elvisperlika/alexis)
+![SPM](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)
+
 ![Notion + Swift](Resources/alexis.png)
 
 Unofficial iOS/macOS SDK for the Notion API.
