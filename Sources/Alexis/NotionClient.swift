@@ -1,7 +1,7 @@
 import Foundation
 
 @available(macOS 10.15.0, *)
-final class NotionClient: NotionAPI {
+public final class NotionClient: NotionAPI {
 
   var baseURL: String
   var notionVersion: String

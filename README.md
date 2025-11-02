@@ -20,7 +20,12 @@ This SDK requires a [Notion Integration](https://www.notion.so/my-integrations).
     NOTION_TOKEN=your_integration_key_here
     ```
 
-4. Create your Notion Client with the API key:
+4. Add the SDK to your project:
+
+- url: "https://github.com/elvisperlika/alexis.git"
+- version: "1.0.0"
+
+1. Create your Notion Client with the API key:
 
     ```swift
     guard let apiKey: String = ProcessInfo.processInfo.environment["NOTION_TOKEN"] else {
