@@ -13,7 +13,7 @@ struct UserListResponse: Codable {
   }
 }
 
-struct NotionUser: Codable {
+public struct NotionUser: Codable {
   let object: String
   let id: String
   let type: UserType
@@ -28,13 +28,13 @@ struct NotionUser: Codable {
   }
 }
 
-enum UserType: String, Codable {
+public enum UserType: String, Codable {
   case person
   case bot
 }
 
-struct Person: Codable {
+public struct Person: Codable {
   let email: String
 }
 
-struct Bot: Codable {}
+public struct Bot: Codable {}

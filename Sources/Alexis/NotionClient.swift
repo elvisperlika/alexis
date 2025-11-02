@@ -7,7 +7,7 @@ public final class NotionClient: NotionAPI {
   var notionVersion: String
   var apiKey: String
 
-  init(
+  public init(
     apiKey: String,
     baseURL: String = Config.Notion.baseURL,
     version: String = Config.Notion.APIVersion
@@ -56,7 +56,7 @@ public final class NotionClient: NotionAPI {
     return request
   }
 
-  func fetchUsers() async throws -> NotionUsers {
+  public func fetchUsers() async throws -> NotionUsers {
     let url = URL(string: "\(baseURL)/users")!
     let request = self.createRequest(url: url, method: "GET")
 
@@ -73,7 +73,7 @@ public final class NotionClient: NotionAPI {
     return usersResponse.results
   }
 
-  func fetchPages() async throws -> NotionPages {
+  public func fetchPages() async throws -> NotionPages {
     let url = URL(string: "\(baseURL)/search")!
     let request = self.createRequest(url: url, method: "POST")
 

@@ -1,8 +1,8 @@
 /// Default configuration parametres.
-enum Config {
+public enum Config {
   /// Default Notion configuration to use recent Notion API.
-  enum Notion {
-    static let baseURL: String = "https://api.notion.com/v1"
-    static let APIVersion: String = "2025-09-03"
+  public enum Notion {
+    public static let baseURL: String = "https://api.notion.com/v1"
+    public static let APIVersion: String = "2025-09-03"
   }
 }

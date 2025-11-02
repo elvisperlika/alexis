@@ -4,7 +4,7 @@ struct NotionSearchResponse: Codable {
   let results: NotionPages
 }
 
-struct NotionPage: Codable {
+public struct NotionPage: Codable {
   let archived: Bool
   let cover: String?
   let createdBy: PageUser
@@ -40,27 +40,27 @@ struct NotionPage: Codable {
   }
 }
 
-struct PageUser: Codable {
+public struct PageUser: Codable {
   let id: String
   let object: String
 }
 
-struct NotionParent: Codable {
+public struct NotionParent: Codable {
   let type: String
   let workspace: Bool
 }
 
-struct NotionProperties: Codable {
+public struct NotionProperties: Codable {
   let title: NotionTitle
 }
 
-struct NotionTitle: Codable {
+public struct NotionTitle: Codable {
   let id: String
   let title: [NotionRichText]
   let type: String
 }
 
-struct NotionRichText: Codable {
+public struct NotionRichText: Codable {
   let annotations: NotionAnnotations
   let href: String?
   let plainText: String
@@ -76,7 +76,7 @@ struct NotionRichText: Codable {
   }
 }
 
-struct NotionAnnotations: Codable {
+public struct NotionAnnotations: Codable {
   let bold: Bool
   let code: Bool
   let color: String
@@ -85,7 +85,7 @@ struct NotionAnnotations: Codable {
   let underline: Bool
 }
 
-struct NotionTextContent: Codable {
+public struct NotionTextContent: Codable {
   let content: String
   let link: String?
 }

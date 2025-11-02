@@ -25,26 +25,26 @@ protocol NotionAPI {
   func fetchPages() async throws -> NotionPages
 }
 
-typealias NotionUsers = [NotionUser]
+public typealias NotionUsers = [NotionUser]
 
 extension NotionUsers {
-  func bots() -> NotionUsers {
+  public func bots() -> NotionUsers {
     return self.filter { $0.type == .bot }
   }
 
-  func persons() -> NotionUsers {
+  public func persons() -> NotionUsers {
     return self.filter { $0.type == .person }
   }
 
-  func findById(_ id: String) -> NotionUser? {
+  public func findById(_ id: String) -> NotionUser? {
     return self.first { $0.id == id }
   }
 }
 
-typealias NotionPages = [NotionPage]
+public typealias NotionPages = [NotionPage]
 
 extension NotionPages {
-  func findById(_ id: String) -> NotionPage? {
+  public func findById(_ id: String) -> NotionPage? {
     return self.first { $0.id == id }
   }
 }
