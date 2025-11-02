@@ -1,27 +1,18 @@
-name: CI
+name: Swift
 
 on:
   push:
   pull_request:
+    branches: [ "main" ]
 
 jobs:
-  test:
+  build:
+
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Swift
-        uses: swift-actions/setup-swift@v2.3.0
-        with:
-          swift-version: '6.2.0'
-
-      - name: Resolve Dependencies
-        run: swift package resolve
-
-      - name: Build
-        run: swift build
-
-      - name: Run Tests
-        run: swift test
+    - uses: actions/checkout@v4
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test -v
