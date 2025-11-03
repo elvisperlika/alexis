@@ -38,4 +38,19 @@ class UsersTests: XCTestCase {
     XCTAssertEqual(Set(personsNames ?? []), Set(["Elvis Unibo"]))
   }
 
+  func testRetrieveUserById() async throws {
+    let users: [NotionUser]? = try await client?.fetchUsers()
+    XCTAssertNotNil(users)
+    XCTAssertFalse(users?.isEmpty ?? true)
+
+    if let firstUser = users?.first {
+      let retrievedUser: NotionUser? = try await client?.retrieveUser(userId: firstUser.id)
+      XCTAssertNotNil(retrievedUser)
+      XCTAssertEqual(retrievedUser?.id, firstUser.id)
+      XCTAssertEqual(retrievedUser?.name, firstUser.name)
+    } else {
+      XCTFail("No users found to test retrieveUserById.")
+    }
+  }
+
 }

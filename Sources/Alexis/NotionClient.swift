@@ -60,7 +60,6 @@ public final class NotionClient: NotionAPI {
   public func fetchUsers() async throws -> NotionUsers {
     let url = URL(string: "\(baseURL)/users")!
     let request = self.createRequest(url: url, method: "GET")
-
     let (data, response) = try await URLSession.shared.data(for: request)
 
     guard let httpResponse = response as? HTTPURLResponse,
@@ -72,6 +71,22 @@ public final class NotionClient: NotionAPI {
     let decoder = JSONDecoder()
     let usersResponse = try decoder.decode(UserListResponse.self, from: data)
     return usersResponse.results
+  }
+
+  public func retrieveUser(userId: String) async throws -> NotionUser {
+    let url = URL(string: "\(baseURL)/users/\(userId)")!
+    let request = self.createRequest(url: url, method: "GET")
+    let (data, response) = try await URLSession.shared.data(for: request)
+
+    guard let httpResponse = response as? HTTPURLResponse,
+      (200...299).contains(httpResponse.statusCode)
+    else {
+      throw URLError(.badServerResponse)
+    }
+
+    let decoder = JSONDecoder()
+    let userResponse = try decoder.decode(NotionUser.self, from: data)
+    return userResponse
   }
 
   public func fetchPages() async throws -> NotionPages {

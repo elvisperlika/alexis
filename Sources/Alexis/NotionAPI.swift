@@ -13,8 +13,16 @@ protocol NotionAPI {
   /// Returns a paginated list of Users for the workspace.
   ///
   /// - Returns: A paginated list of ``NotionUser`` objects.
-  /// - Throws: An error if the request fails with Server Message != 200.
+  /// - Throws: An error if the request fails.
   func fetchUsers() async throws -> NotionUsers
+
+  /// Retrieves a specific User by their unique identifier.
+  ///
+  /// - Parameters:
+  ///   - userId: The unique identifier of the User to retrieve.
+  /// - Returns: A ``NotionUser`` object.
+  /// - Throws: An error if the request fails.
+  func retrieveUser(userId: String) async throws -> NotionUser
 
   /// Searches all parent or child pages and data_sources that have been shared with an integration.
 
