@@ -37,4 +37,11 @@ public struct Person: Codable {
   let email: String
 }
 
-public struct Bot: Codable {}
+public struct Bot: Codable {
+  let owner: BotOwner?
+}
+
+public class BotOwner: Codable {
+  let type: String
+  let user: NotionUser?
+}

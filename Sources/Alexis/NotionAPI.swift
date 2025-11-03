@@ -10,28 +10,38 @@ protocol NotionAPI {
   ///   - version: The Notion API version to use.
   init(apiKey: String, baseURL: String, version: String) throws
 
-  /// Returns a paginated list of Users for the workspace.
+  /// Returns all users in the workspace.
+  /// [[Notion API Reference](https://developers.notion.com/reference/get-users)]
   ///
   /// - Returns: A paginated list of ``NotionUser`` objects.
   /// - Throws: An error if the request fails.
-  func fetchUsers() async throws -> NotionUsers
+  func users() async throws -> NotionUsers
 
   /// Retrieves a specific User by their unique identifier.
+  /// [[Notion API Reference](https://developers.notion.com/reference/get-user)]
   ///
   /// - Parameters:
   ///   - userId: The unique identifier of the User to retrieve.
   /// - Returns: A ``NotionUser`` object.
   /// - Throws: An error if the request fails.
-  func retrieveUser(userId: String) async throws -> NotionUser
+  func user(userId: String) async throws -> NotionUser
+
+  /// Retrieves the bot User associated with the API token provided in the authorization header.
+  /// The bot will have an owner field with information about the person who authorized the integration.
+  /// [[Notion API Reference](https://developers.notion.com/reference/get-self)]
+  ///
+  /// - Returns: A ``NotionUser`` object representing the bot user.
+  /// - Throws: An error if the request fails.
+  func me() async throws -> NotionUser
 
   /// Searches all parent or child pages and data_sources that have been shared with an integration.
-
   /// Returns all pages or data_sources, excluding duplicated linked databases,
   /// that have titles that include the query param.
   ///
   /// - Returns: A paginated list of ``NotionPage`` objects.
   /// - Throws: An error if the request fails with Server Message != 200.
-  func fetchPages() async throws -> NotionPages
+  func search() async throws -> NotionPages
+
 }
 
 public typealias NotionUsers = [NotionUser]
