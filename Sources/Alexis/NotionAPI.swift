@@ -37,10 +37,23 @@ protocol NotionAPI {
   /// Searches all parent or child pages and data_sources that have been shared with an integration.
   /// Returns all pages or data_sources, excluding duplicated linked databases,
   /// that have titles that include the query param.
+  /// [[Notion API Reference](https://developers.notion.com/reference/post-search)]
   ///
+  ///  - Parameters:
+  ///    - query: A string to search for in page and database titles.
+  ///    - filter: An optional ``SearchFilter`` to filter results by object type.
+  ///    - sort: An optional ``SearchSort`` to sort results by last edited time.
+  ///    - startCursor: An optional string representing the cursor for pagination.
+  ///    - pageSize: An optional integer representing the number of results to return per page
   /// - Returns: A paginated list of ``NotionPage`` objects.
   /// - Throws: An error if the request fails with Server Message != 200.
-  func search() async throws -> NotionPages
+  func search(
+    query: String?,
+    filter: SearchFilter?,
+    sort: SearchSort?,
+    startCursor: String?,
+    pageSize: Int?
+  ) async throws -> NotionPages
 
 }
 

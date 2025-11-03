@@ -1,9 +1,5 @@
 import Foundation
 
-struct NotionSearchResponse: Codable {
-  let results: NotionPages
-}
-
 public struct NotionPage: Codable {
   let archived: Bool
   let cover: String?
