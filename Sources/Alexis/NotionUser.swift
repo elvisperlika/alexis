@@ -41,6 +41,7 @@ public struct Bot: Codable {
   let owner: BotOwner?
 }
 
+/// TODO: Find better solution for class instead of struct (it's to avoid cyclic reference in Codable)
 public class BotOwner: Codable {
   let type: String
   let user: NotionUser?

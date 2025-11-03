@@ -85,7 +85,7 @@ public final class NotionClient: NotionAPI {
     return userResponse
   }
 
-  func me() async throws -> NotionUser {
+  public func me() async throws -> NotionUser {
     let url = URL(string: "\(baseURL)/users/me")!
     let request = self.createRequest(url: url, method: "GET")
     let (data, response) = try await URLSession.shared.data(for: request)
