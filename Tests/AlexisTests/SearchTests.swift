@@ -13,7 +13,7 @@ class SearchTests: XCTestCase {
   }
 
   func testSearchAllPages() async throws {
-    let pages = try await client?.fetchPages() ?? []
+    let pages = try await client?.search() ?? []
     XCTAssertEqual(
       Set([Optional("BBBB"), Optional("AAAA")]),
       Set(pages.map({ page in page.properties.title.title.first?.plainText }))

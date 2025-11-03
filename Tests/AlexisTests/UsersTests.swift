@@ -13,7 +13,7 @@ class UsersTests: XCTestCase {
   }
 
   func testGetAllUsers() async throws {
-    let users: [NotionUser]? = try await client?.fetchUsers()
+    let users: [NotionUser]? = try await client?.users()
     XCTAssertNotNil(users)
     XCTAssertFalse(users?.isEmpty ?? true)
 
@@ -25,17 +25,39 @@ class UsersTests: XCTestCase {
   }
 
   func testGetOnlyBots() async throws {
-    let bots: [NotionUser]? = try await client?.fetchUsers().bots()
+    let bots: [NotionUser]? = try await client?.users().bots()
     let botsNames = bots?.map({ bot in bot.name ?? "Unnamed" })
     XCTAssertNotNil(bots)
     XCTAssertEqual(Set(botsNames ?? []), Set(["Alexis", "Portfolio"]))
   }
 
   func testGetOnlyPersons() async throws {
-    let users: [NotionUser]? = try await client?.fetchUsers().persons()
+    let users: [NotionUser]? = try await client?.users().persons()
     let personsNames = users?.map({ person in person.name ?? "Unnamed" })
     XCTAssertNotNil(personsNames)
     XCTAssertEqual(Set(personsNames ?? []), Set(["Elvis Unibo"]))
+  }
+
+  func testRetrieveUserById() async throws {
+    let users: [NotionUser]? = try await client?.users()
+    XCTAssertNotNil(users)
+    XCTAssertFalse(users?.isEmpty ?? true)
+
+    if let firstUser = users?.first {
+      let retrievedUser: NotionUser? = try await client?.user(userId: firstUser.id)
+      XCTAssertNotNil(retrievedUser)
+      XCTAssertEqual(retrievedUser?.id, firstUser.id)
+      XCTAssertEqual(retrievedUser?.name, firstUser.name)
+    } else {
+      XCTFail("No users found to test retrieveUserById.")
+    }
+  }
+
+  func testRetrieveBotUser() async throws {
+    let botUser: NotionUser? = try await client?.me()
+    XCTAssertNotNil(botUser)
+    XCTAssertEqual(botUser?.type, .bot)
+    XCTAssertEqual(botUser?.name, "Alexis")
   }
 
 }
