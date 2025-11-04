@@ -1,7 +1,7 @@
 import SwiftDotenv
 import XCTest
 
-@testable import Alexis
+@testable import NotionKit
 
 func setupClient() throws -> NotionClient {
   try Dotenv.configure()

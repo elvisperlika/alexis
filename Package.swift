@@ -5,11 +5,11 @@
 import PackageDescription
 
 let package = Package(
-  name: "Alexis",
+  name: "NotionKit",
   products: [
     .library(
-      name: "Alexis",
-      targets: ["Alexis"]
+      name: "NotionKit",
+      targets: ["NotionKit"]
     )
   ],
   dependencies: [
@@ -17,12 +17,12 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "Alexis"
+      name: "NotionKit"
     ),
     .testTarget(
-      name: "AlexisTests",
+      name: "NotionKitTests",
       dependencies: [
-        "Alexis",
+        "NotionKit",
         .product(name: "SwiftDotenv", package: "swift-dotenv"),
       ]
     ),

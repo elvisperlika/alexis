@@ -1,12 +1,12 @@
-# ``Alexis``
+# ``NotionKit``
 
-[![CI](https://github.com/elvisperlika/alexis/workflows/CI/badge.svg)](https://github.com/elvisperlika/alexis/actions)
-![Swift](https://img.shields.io/badge/Swift-6.1-orange.svg)
+[![CI](https://github.com/elvisperlika/notion-kit/workflows/CI/badge.svg)](https://github.com/elvisperlika/notion-kit/actions)
+![Swift](https://img.shields.io/badge/Swift-6.1-blue.svg)
 ![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20macOS-lightgrey.svg)
-![License](https://img.shields.io/github/license/elvisperlika/alexis)
+![License](https://img.shields.io/github/license/elvisperlika/notion-kit)
 ![SPM](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)
 
-![Notion + Swift](Resources/alexis.png)
+![Notion x Swift](Resources/notionkit.png)
 
 Unofficial iOS/macOS SDK for the Notion API.
 
@@ -29,7 +29,7 @@ This SDK requires a [Notion Integration](https://www.notion.so/my-integrations).
 4. Add the SDK to your project:
 
     ```swift
-    .package(url: "https://github.com/elvisperlika/alexis.git", from: "1.0.0")
+    .package(url: "https://github.com/elvisperlika/notion-kit", from: "1.0.0")
     ```
   
 5. Create your Notion Client with the API key:
