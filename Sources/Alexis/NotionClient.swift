@@ -95,13 +95,46 @@ public final class NotionClient: NotionAPI {
     return botUserResponse
   }
 
-  public func search() async throws -> NotionPages {
+  public func search(
+    query: String? = nil,
+    filter: SearchFilter? = nil,
+    sort: SearchSort? = nil,
+    startCursor: String? = nil,
+    pageSize: Int? = nil
+  ) async throws -> NotionPages {
     let url = URL(string: "\(baseURL)/search")!
-    let request = self.createRequest(url: url, method: "POST")
+    var request = self.createRequest(url: url, method: "POST")
+
+    request.httpBody = try createSearchRequestBody(
+      query: query,
+      filter: filter,
+      sort: sort,
+      startCursor: startCursor,
+      pageSize: pageSize
+    )
+
     let (data, response) = try await URLSession.shared.data(for: request)
     try self.validateResponse(response)
     let decoder = JSONDecoder()
-    let searchResponse = try decoder.decode(NotionSearchResponse.self, from: data)
+    let searchResponse = try decoder.decode(SearchResponse.self, from: data)
     return searchResponse.results
+  }
+
+  private func createSearchRequestBody(
+    query: String?,
+    filter: SearchFilter?,
+    sort: SearchSort?,
+    startCursor: String?,
+    pageSize: Int?
+  ) throws -> Data {
+    let searchRequest = SearchRequest(
+      query: query,
+      filter: filter,
+      sort: sort,
+      startCursor: startCursor,
+      pageSize: pageSize
+    )
+    let encoder = JSONEncoder()
+    return try encoder.encode(searchRequest)
   }
 }
