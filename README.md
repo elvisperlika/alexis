@@ -1,18 +1,20 @@
-# ``Alexis``
+# ``NotionKit``
 
-[![CI](https://github.com/elvisperlika/alexis/workflows/CI/badge.svg)](https://github.com/elvisperlika/alexis/actions)
-![Swift](https://img.shields.io/badge/Swift-6.1-orange.svg)
+[![CI](https://github.com/elvisperlika/notion-kit/workflows/CI/badge.svg)](https://github.com/elvisperlika/notion-kit/actions)
+![Swift](https://img.shields.io/badge/Swift-6.1-blue.svg)
 ![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20macOS-lightgrey.svg)
-![License](https://img.shields.io/github/license/elvisperlika/alexis)
+![License](https://img.shields.io/github/license/elvisperlika/notion-kit)
 ![SPM](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)
 
-![Notion + Swift](Resources/alexis.png)
+![Notion x Swift](Resources/notionkit.png)
 
 Unofficial iOS/macOS SDK for the Notion API.
 
 ## Overview
 
 This SDK provides a Swift interface to interact with the Notion API.
+
+This SDK is update on Notion API "**2025-09-03**" with baseURL `https://api.notion.com/v1`.
 
 ## Setup
 
@@ -29,7 +31,7 @@ This SDK requires a [Notion Integration](https://www.notion.so/my-integrations).
 4. Add the SDK to your project:
 
     ```swift
-    .package(url: "https://github.com/elvisperlika/alexis.git", from: "1.0.0")
+    .package(url: "https://github.com/elvisperlika/notion-kit", from: "1.0.0")
     ```
   
 5. Create your Notion Client with the API key:
@@ -49,7 +51,7 @@ and save it as an environment variable in your codebase.
 Keep in mind that the integration can only access
 pages or databases you have manually shared with it.
 
-### Workspace's users
+### Users
 
 To get the list of users in your Notion workspace, use the following code:
 
@@ -61,18 +63,32 @@ Filter by user type:
 
 ```swift
 /// Get only bots
-let bots: [NotionUser]? = try await client?.fetchUsers().bots()
+let bots: [NotionUser]? = try await client?.users().bots()
 
 /// Get only persons
-let persons: [NotionUser]? = try await client?.fetchUsers().persons()
+let persons: [NotionUser]? = try await client?.users().persons()
+
+/// Get the current user (the integration itself)
+let me: NotionUser? = try await client?.me()
 ```
 
-### Pages
+### Search
 
 Get all pages shared with the integration:
 
 ```swift
-let pages = try await client?.fetchPages()
+/// Get all pages shared with the integration
+let pages = try await client?.search()
 ```
 
-### Databases
+It's possible to pass some parameters to filter the results:
+
+- **`query`**: A string to search for in page and database titles.
+- **`filter`**: An optional ``SearchFilter`` to filter results by object type.
+  - Possible values for `SearchFilter.value` are `.page` or `.database`.
+  - Possible values for `SearchFilter.property` is `.object`.
+- **`sort`**: An optional ``SearchSort`` to sort results by last edited time.
+  - Possible values for `SearchSort.direction` are `.ascending` or `.descending`.
+  - Possible values for `SearchSort.timestamp` is `.lastEditedTime`.
+- **`startCursor`**: An optional string representing the cursor for pagination.
+- **`pageSize`**: An optional integer representing the number of results to return per page.

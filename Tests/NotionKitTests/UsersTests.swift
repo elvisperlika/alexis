@@ -2,7 +2,7 @@ import Foundation
 import SwiftDotenv
 import XCTest
 
-@testable import Alexis
+@testable import NotionKit
 
 class UsersTests: XCTestCase {
 
