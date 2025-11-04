@@ -4,7 +4,7 @@ public struct SearchResponse: Decodable {
   let nextCursor: String?
   let hasMore: Bool
   let type: String?
-  let pageOrDatabase: [Any]?
+  let pageOrDatabase: Any?
 
   enum CodingKeys: String, CodingKey {
     case object
@@ -48,7 +48,7 @@ public struct SearchFilter: Encodable {
 
   enum Value: String, Encodable {
     case page = "page"
-    case database = "data_source"
+    case data_source = "data_source"
   }
 
   enum Property: String, Encodable {

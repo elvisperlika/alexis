@@ -30,7 +30,7 @@ class SearchTests: XCTestCase {
   }
 
   func testSearchDatabasesOnly() async throws {
-    let filter = SearchFilter(value: .database, property: .object)
+    let filter = SearchFilter(value: .data_source, property: .object)
     let pages = try await client?.search(filter: filter) ?? []
     XCTAssertEqual(0, pages.count)
   }

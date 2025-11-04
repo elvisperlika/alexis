@@ -45,6 +45,7 @@ protocol NotionAPI {
   ///    - sort: An optional ``SearchSort`` to sort results by last edited time.
   ///    - startCursor: An optional string representing the cursor for pagination.
   ///    - pageSize: An optional integer representing the number of results to return per page
+  ///
   /// - Returns: A paginated list of ``NotionPage`` objects.
   /// - Throws: An error if the request fails with Server Message != 200.
   func search(
