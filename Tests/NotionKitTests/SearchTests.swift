@@ -21,8 +21,8 @@ class SearchTests: XCTestCase {
   }
 
   func testSearchPagesOnly() async throws {
-    let filter = SearchFilter(value: .page, property: .object)
-    let pages = try await client?.search(filter: filter) ?? []
+    let filter: SearchFilter = SearchFilter(value: .page, property: .object)
+    let pages: NotionPages = try await client?.search(filter: filter) ?? []
     XCTAssertEqual(
       Set([Optional("BBBB"), Optional("AAAA")]),
       Set(pages.map({ page in page.properties.title.title.first?.plainText }))
