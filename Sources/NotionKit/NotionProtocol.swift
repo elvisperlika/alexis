@@ -58,3 +58,6 @@ protocol NotionProtocol {
   ) async throws -> NotionPages
 
 }
+
+/// A typealias representing a Notion unique identifier.
+typealias NotionID = String

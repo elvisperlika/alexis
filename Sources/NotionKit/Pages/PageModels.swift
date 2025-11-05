@@ -1,57 +1,88 @@
 import Foundation
 
 public struct NotionPage: Codable {
-  let archived: Bool
-  let cover: String?
-  let createdBy: PageUser
-  let createdTime: String
-  let icon: String?
-  let id: String
-  let inTrash: Bool
-  let isLocked: Bool
-  let lastEditedBy: PageUser
-  let lastEditedTime: String
+  /// always "page"
   let object: String
-  let parent: NotionParent
-  let properties: NotionProperties
-  let publicUrl: String?
+  /// UUID
+  let id: NotionID
+  /// ISO 8601 format date-time string
+  let createdTime: String
+  /// User who created the page
+  let createdBy: PartialUser
+  /// ISO 8601 format date-time string
+  let lastEditedTime: String
+  /// User who last edited the page
+  let lastEditedBy: PartialUser
+  /// Indicates whether the page is archived
+  let archived: Bool
+  /// Indicates whether the page is in the trash
+  let inTrash: Bool
+  /// Page icon
+  let icon: String?  // TODO: it's a File Object
+  let cover: String?  // TODO: it's a File Object
+  let properties: PageProperties
+  /// Parent information
+  let parent: Parent
+  /// i.e. https://www.notion.so/Avocado-d093f1d200464ce78b36e58a3f0d8043
   let url: String
+  /// i.e. https://jm-testing.notion.site/p1-6df2c07bfc6b4c46815ad205d132e22d,
+  /// if the page is not shared the value is `null`
+  let publicUrl: String?
 
   enum CodingKeys: String, CodingKey {
-    case archived
-    case cover
+    case archived, cover, object, parent, properties, id, icon, url
     case createdBy = "created_by"
     case createdTime = "created_time"
-    case icon
-    case id
     case inTrash = "in_trash"
-    case isLocked = "is_locked"
     case lastEditedBy = "last_edited_by"
     case lastEditedTime = "last_edited_time"
-    case object
-    case parent
-    case properties
     case publicUrl = "public_url"
-    case url
   }
 }
 
-public struct PageUser: Codable {
-  let id: String
+public struct PartialUser: Codable {
   let object: String
+  let id: NotionID
 }
 
-public struct NotionParent: Codable {
-  let type: String
-  let workspace: Bool
+public struct Parent: Codable {
+  /// Values: "workspace", "page_id", "data_source_id", "database_id, "block_id"
+  let type: ParentType
+  /// if `type == "data_source_id"`
+  let dataSourceId: NotionID?
+  /// if `type == "data_source_id"` or `type == "database_id"`
+  let databaseId: NotionID?
+  /// if `type == "page_id"`
+  let pageId: NotionID?
+  /// if `type == "workspace"`
+  let workspace: Bool?
+  /// if `type == "block_id"`
+  let blockId: NotionID?
+
+  enum CodingKeys: String, CodingKey {
+    case type, workspace
+    case pageId = "page_id"
+    case databaseId = "database_id"
+    case blockId = "block_id"
+    case dataSourceId = "data_source_id"
+  }
+
+  public enum ParentType: String, Codable {
+    case workspace
+    case pageId = "page_id"
+    case dataSourceId = "data_source_id"
+    case databaseId = "database_id"
+    case blockId = "block_id"
+  }
 }
 
-public struct NotionProperties: Codable {
+// TODO: Expand with other property types
+public struct PageProperties: Codable {
   let title: NotionTitle
 }
 
 public struct NotionTitle: Codable {
-  let id: String
+  let id: NotionID
   let title: [NotionRichText]
   let type: String
 }
@@ -64,11 +95,8 @@ public struct NotionRichText: Codable {
   let type: String
 
   enum CodingKeys: String, CodingKey {
-    case annotations
-    case href
+    case annotations, href, text, type
     case plainText = "plain_text"
-    case text
-    case type
   }
 }
 
@@ -89,6 +117,10 @@ public struct NotionTextContent: Codable {
 public typealias NotionPages = [NotionPage]
 
 extension NotionPages {
+
+  /// Find a page by its ID
+  /// - Parameter id: The ID of the page to find
+  /// - Returns: The page with the specified ID, or `nil` if not found
   public func findById(_ id: String) -> NotionPage? {
     return self.first { $0.id == id }
   }

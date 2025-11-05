@@ -17,7 +17,7 @@ public struct NotionUser: Codable {
   /// i.e. "user"
   let object: String
   /// i.e. UUID
-  let id: String
+  let id: NotionID
   /// Values: "person" or "bot"
   let type: UserType?
   /// present if `type == "person"`
