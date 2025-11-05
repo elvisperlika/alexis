@@ -85,3 +85,11 @@ public struct NotionTextContent: Codable {
   let content: String
   let link: String?
 }
+
+public typealias NotionPages = [NotionPage]
+
+extension NotionPages {
+  public func findById(_ id: String) -> NotionPage? {
+    return self.first { $0.id == id }
+  }
+}

@@ -1,12 +1,6 @@
-//
-//  NotionError.swift
-//  Alexis
-//
-//  Created by Elvis Perlika on 31/10/25.
-//
-
 import Foundation
 
+/// Represents errors that can occur in the NotionKit library.
 enum NotionError: LocalizedError {
   case InvalidAPIKey(String)
   case InvalidVersionFormat(String)
@@ -15,7 +9,7 @@ enum NotionError: LocalizedError {
 
   var errorDescription: String? {
     switch self {
-    case let .InvalidAPIKey(message), let .InvalidVersionFormat(message):
+    case .InvalidAPIKey(let message), .InvalidVersionFormat(let message):
       return message
     case .InvalidURL:
       return "Invalid URL"

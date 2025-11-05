@@ -2,7 +2,7 @@ import Foundation
 
 struct UserListResponse: Codable {
   let object: String
-  let results: [NotionUser]
+  let results: NotionUsers
   let nextCursor: String?
   let hasMore: Bool
 
@@ -25,6 +25,22 @@ public struct NotionUser: Codable {
   enum CodingKeys: String, CodingKey {
     case object, id, type, person, bot, name
     case avatarUrl = "avatar_url"
+  }
+}
+
+public typealias NotionUsers = [NotionUser]
+
+extension NotionUsers {
+  public func bots() -> NotionUsers {
+    return self.filter { $0.type == .bot }
+  }
+
+  public func persons() -> NotionUsers {
+    return self.filter { $0.type == .person }
+  }
+
+  public func findById(_ id: String) -> NotionUser? {
+    return self.first { $0.id == id }
   }
 }
 

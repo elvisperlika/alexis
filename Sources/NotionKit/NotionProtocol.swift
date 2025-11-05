@@ -1,6 +1,7 @@
 @available(iOS 13.0.0, *)
 @available(macOS 10.15.0, *)
-protocol NotionAPI {
+
+protocol NotionProtocol {
 
   /// Initialize a Notion Client.
   ///
@@ -56,28 +57,4 @@ protocol NotionAPI {
     pageSize: Int?
   ) async throws -> NotionPages
 
-}
-
-public typealias NotionUsers = [NotionUser]
-
-extension NotionUsers {
-  public func bots() -> NotionUsers {
-    return self.filter { $0.type == .bot }
-  }
-
-  public func persons() -> NotionUsers {
-    return self.filter { $0.type == .person }
-  }
-
-  public func findById(_ id: String) -> NotionUser? {
-    return self.first { $0.id == id }
-  }
-}
-
-public typealias NotionPages = [NotionPage]
-
-extension NotionPages {
-  public func findById(_ id: String) -> NotionPage? {
-    return self.first { $0.id == id }
-  }
 }
