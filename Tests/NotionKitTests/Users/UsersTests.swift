@@ -17,7 +17,7 @@ class UsersTests: XCTestCase {
     XCTAssertNotNil(users)
     XCTAssertFalse(users?.isEmpty ?? true)
 
-    let names: [String]? = users?.map { user in user.name ?? "Unnamed" }
+    let names: [String]? = users?.map { user in user.name ?? "" }
     XCTAssertEqual(
       Set(names ?? []),
       Set(["Elvis Unibo", "Alexis", "Portfolio"])
