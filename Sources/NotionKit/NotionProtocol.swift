@@ -1,7 +1,19 @@
 @available(iOS 13.0.0, *)
 @available(macOS 10.15.0, *)
-
 protocol NotionProtocol {
+
+  /// The base URL for Notion API endpoints.
+  var baseURL: String { get }
+
+  /// The Notion API version to use.
+  var notionVersion: String { get }
+
+  /// The Notion API integration token for authentication.
+  var apiKey: String { get }
+
+  /// The base headers for Notion API requests.
+  /// Returns: A dictionary of header fields and their values.
+  var baseHeader: [String: String] { get }
 
   /// Initialize a Notion Client.
   ///
@@ -55,7 +67,7 @@ protocol NotionProtocol {
     sort: SearchSort?,
     startCursor: String?,
     pageSize: Int?
-  ) async throws -> NotionPages
+  ) async throws -> SearchResponse
 
 }
 

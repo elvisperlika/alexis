@@ -79,7 +79,7 @@ Get all pages shared with the integration:
 
 ```swift
 /// Get all pages shared with the integration
-let pages = try await client?.search()
+let pages = try await client?.search().results
 ```
 
 It's possible to pass some parameters to filter the results:

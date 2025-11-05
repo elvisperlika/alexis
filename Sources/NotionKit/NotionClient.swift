@@ -7,8 +7,6 @@ public final class NotionClient: NotionProtocol {
   var baseURL: String
   var notionVersion: String
   var apiKey: String
-  private let decoder = JSONDecoder()
-  private let encoder = JSONEncoder()
   var baseHeader: [String: String] {
     return [
       "Authorization": "Bearer \(self.apiKey)",

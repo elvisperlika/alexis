@@ -16,7 +16,7 @@ extension NotionClient {
   ///    - startCursor: An optional string representing the cursor for pagination.
   ///    - pageSize: An optional integer representing the number of results to return per page
   ///
-  /// - Returns: A paginated list of ``NotionPage`` objects.
+  /// - Returns: A ``SearchResponse`` containing the search results and pagination info.
   /// - Throws: An error if the request fails with Server Message != 200.
   public func search(
     query: String? = nil,
@@ -24,7 +24,7 @@ extension NotionClient {
     sort: SearchSort? = nil,
     startCursor: String? = nil,
     pageSize: Int? = nil
-  ) async throws -> NotionPages {
+  ) async throws -> SearchResponse {
     let url = URL(string: "\(baseURL)/search")!
     var request = createRequest(baseHeader: self.baseHeader, url: url, method: "POST")
 
@@ -39,7 +39,7 @@ extension NotionClient {
     let (data, response) = try await URLSession.shared.data(for: request)
     try validateResponse(response)
     let searchResponse = try JSONDecoder().decode(SearchResponse.self, from: data)
-    return searchResponse.results
+    return searchResponse
   }
 
   private func createSearchRequestBody(

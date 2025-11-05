@@ -7,11 +7,9 @@ public struct SearchResponse: Decodable {
   let pageOrDatabase: Any?
 
   enum CodingKeys: String, CodingKey {
-    case object
-    case results
+    case object, results, type
     case nextCursor = "next_cursor"
     case hasMore = "has_more"
-    case type
     case pageOrDatabase = "page_or_database"
   }
 
@@ -34,9 +32,7 @@ public struct SearchRequest: Encodable {
   let pageSize: Int?
 
   enum CodingKeys: String, CodingKey {
-    case query
-    case filter
-    case sort
+    case query, filter, sort
     case startCursor = "start_cursor"
     case pageSize = "page_size"
   }
