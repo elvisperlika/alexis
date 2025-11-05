@@ -1,9 +1,10 @@
 # ``NotionKit``
 
 [![CI](https://github.com/elvisperlika/notion-kit/workflows/CI/badge.svg)](https://github.com/elvisperlika/notion-kit/actions)
+![Notion API Version](https://img.shields.io/badge/Notion%20API%20Version-2025--09--03-white.svg)
 ![Swift](https://img.shields.io/badge/Swift-6.1-blue.svg)
 ![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20macOS-lightgrey.svg)
-![License](https://img.shields.io/github/license/elvisperlika/notion-kit)
+![License](https://img.shields.io/github/license/elvisperlika/notion-kit.svg)
 ![SPM](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)
 
 ![Notion x Swift](Resources/notionkit.png)
