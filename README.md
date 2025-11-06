@@ -57,20 +57,34 @@ pages or databases you have manually shared with it.
 To get the list of users in your Notion workspace, use the following code:
 
 ```swift
-let users: [NotionUser]? = try await client?.fetchUsers()
+let users: [NotionUser]? = try await client?.users()
 ```
 
 Filter by user type:
 
+- **`bots`**: Get only bot users.
+
+  ```swift
+  let bots: [NotionUser]? = try await client?.users().bots()
+  ```
+
+- **`persons`**: Get only person users.
+
+  ```swift
+  let persons: [NotionUser]? = try await client?.users().persons()
+  ```
+
+Get the current user (the integration itself):
+
 ```swift
-/// Get only bots
-let bots: [NotionUser]? = try await client?.users().bots()
-
-/// Get only persons
-let persons: [NotionUser]? = try await client?.users().persons()
-
-/// Get the current user (the integration itself)
 let me: NotionUser? = try await client?.me()
+```
+
+Get a user by their ID:
+
+```swift
+let userId: String = "user_id_here"
+let user = try await client?.user(id: userId)
 ```
 
 ### Search
@@ -93,3 +107,16 @@ It's possible to pass some parameters to filter the results:
   - Possible values for `SearchSort.timestamp` is `.lastEditedTime`.
 - **`startCursor`**: An optional string representing the cursor for pagination.
 - **`pageSize`**: An optional integer representing the number of results to return per page.
+
+#### Pagination
+
+The search method supports pagination through the `startCursor` and `pageSize` parameters.
+
+```swift
+let firstResponse = try await client?.search(pageSize: 10)
+let pages = firstResponse?.results
+if let nextCursor = firstResponse?.nextCursor {
+    let secondResponse = try await client?.search(startCursor: nextCursor, pageSize: 10)
+    let otherPages = secondResponse?.results
+}
+```
