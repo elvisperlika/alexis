@@ -18,7 +18,7 @@ public struct NotionPage: Codable {
   /// Indicates whether the page is in the trash
   let inTrash: Bool
   /// Page icon
-  let icon: String?  // TODO: it's a File Object
+  let icon: Icon?
   let cover: String?  // TODO: it's a File Object
   let properties: PageProperties
   /// Parent information
@@ -38,6 +38,49 @@ public struct NotionPage: Codable {
     case lastEditedTime = "last_edited_time"
     case publicUrl = "public_url"
   }
+}
+
+/// Page Icon
+public struct Icon: Codable {
+  /// Values: "external", "emoji", "file_upload"
+  let type: IconType
+  /// if `type == "file"`
+  let file: File?
+  /// if `type == "external"`
+  let external: External?
+  /// if `type == "file_upload"`
+  let fileUpload: FileUpload?
+
+  enum CodingKeys: String, CodingKey {
+    case type, file, external
+    case fileUpload = "file_upload"
+  }
+
+  public enum IconType: String, Codable {
+    case external, emoji
+    case fileUpload = "file_upload"
+  }
+}
+
+// Notion-hosted file (uploaded via UI)
+public struct File: Codable {
+  let url: String
+  let expiryTime: String
+
+  enum CodingKeys: String, CodingKey {
+    case url
+    case expiryTime = "expiry_time"
+  }
+}
+
+// File uploaded via the Notion API
+public struct FileUpload: Codable {
+  let id: NotionID
+}
+
+// External file
+public struct External: Codable {
+  let url: String
 }
 
 public struct PartialUser: Codable {
