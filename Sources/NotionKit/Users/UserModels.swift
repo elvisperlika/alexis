@@ -78,7 +78,7 @@ public class BotOwner: Codable {
   let type: OwnerType
   /// present if `type == "workspace"`
   let workspace: Bool?
-  /// present if `type == "workspace"`, in case of `type == "user"` the value is `null`
+  /// present if `type == "workspace"`, `null` if `type == "user"`
   let workspaceName: String?
   /// present if `type == "workspace"`
   let workspaceId: String?

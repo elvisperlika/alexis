@@ -26,14 +26,14 @@ class UsersTests: XCTestCase {
 
   func testGetOnlyBots() async throws {
     let bots: [NotionUser]? = try await client?.users().bots()
-    let botsNames = bots?.map({ bot in bot.name ?? "Unnamed" })
+    let botsNames = bots?.map({ bot in bot.name ?? "" })
     XCTAssertNotNil(bots)
     XCTAssertEqual(Set(botsNames ?? []), Set(["Alexis", "Portfolio"]))
   }
 
   func testGetOnlyPersons() async throws {
     let users: [NotionUser]? = try await client?.users().persons()
-    let personsNames = users?.map({ person in person.name ?? "Unnamed" })
+    let personsNames = users?.map({ person in person.name ?? "" })
     XCTAssertNotNil(personsNames)
     XCTAssertEqual(Set(personsNames ?? []), Set(["Elvis Unibo"]))
   }
