@@ -120,3 +120,22 @@ if let nextCursor = firstResponse?.nextCursor {
     let otherPages = secondResponse?.results
 }
 ```
+
+To have a more convenient way to handle pagination, you can use the
+``SearchPaginator`` helper:
+
+```swift
+let paginator = SearchPaginator(client: client!, size: 5)
+/// Default page size is 10, but you can customize it.
+let response = try await paginator.nextResponse()
+let nextResponse = try await paginator.nextResponse()
+let nextNextResponse = try await paginator.nextResponse()
+```
+
+Do you want to fetch all pages at once? Use the
+``fetchAllPages()`` method (it will handle pagination for you):
+
+```swift
+let paginator = SearchPaginator(client: client!)
+let allPages = try await paginator.fetchAllPages()
+```

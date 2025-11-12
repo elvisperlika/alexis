@@ -13,17 +13,16 @@ class PaginationTests: XCTestCase {
   }
 
   func testEmptyPagination() async throws {
-    let pages = try await client?.search()
-    let pagination = SearchPaginator(client: client!, response: pages!)
-    XCTAssertFalse(pagination.hasMore())
+    let paginator = SearchPaginator(client: client!)
+    XCTAssertFalse(paginator.hasMore())
   }
 
   func testPaginationNextResponse() async throws {
-    let response = try await client?.search(pageSize: 1)
-    let pagination = SearchPaginator(client: client!, response: response!)
-    XCTAssertTrue(pagination.hasMore())
-    let nextPages = try await pagination.nextResponse()
-    XCTAssertNotNil(nextPages)
-    XCTAssertEqual(nextPages?.results.count, 1)
+    let paginator = SearchPaginator(client: client!, size: 1)
+    XCTAssertFalse(paginator.hasMore())
+    let firstResponse = try await paginator.nextResponse()
+    XCTAssertNotNil(firstResponse)
+    XCTAssertTrue(paginator.hasMore())
+    XCTAssertEqual(firstResponse?.results.count, 1)
   }
 }
