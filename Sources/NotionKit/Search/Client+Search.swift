@@ -26,20 +26,17 @@ extension NotionClient {
     pageSize: Int? = nil
   ) async throws -> SearchResponse {
     let url = URL(string: "\(baseURL)/search")!
-    var request = createRequest(baseHeader: self.baseHeader, url: url, method: "POST")
-
-    request.httpBody = try createSearchRequestBody(
+    let body = try createSearchRequestBody(
       query: query,
       filter: filter,
       sort: sort,
       startCursor: startCursor,
       pageSize: pageSize
     )
-
+    let request = httpHelper.post(baseHeader: self.baseHeader, url: url, body: body)
     let (data, response) = try await URLSession.shared.data(for: request)
-    try validateResponse(response)
-    let searchResponse = try JSONDecoder().decode(SearchResponse.self, from: data)
-    return searchResponse
+    try httpHelper.validateResponse(response)
+    return try JSONDecoder().decode(SearchResponse.self, from: data)
   }
 
   private func createSearchRequestBody(

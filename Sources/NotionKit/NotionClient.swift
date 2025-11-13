@@ -7,6 +7,8 @@ public final class NotionClient: NotionProtocol {
   var baseURL: String
   var notionVersion: String
   var apiKey: String
+  let httpHelper = HTTPHelper()
+
   var baseHeader: [String: String] {
     return [
       "Authorization": "Bearer \(self.apiKey)",
