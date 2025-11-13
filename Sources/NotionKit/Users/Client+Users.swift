@@ -11,11 +11,10 @@ extension NotionClient {
   /// - Throws: An error if the request fails.
   public func users() async throws -> NotionUsers {
     let url = URL(string: "\(baseURL)/users")!
-    let request = createRequest(baseHeader: self.baseHeader, url: url, method: "GET")
+    let request = httpHelper.get(baseHeader: self.baseHeader, url: url)
     let (data, response) = try await URLSession.shared.data(for: request)
-    try validateResponse(response)
-    let usersResponse = try JSONDecoder().decode(UserListResponse.self, from: data)
-    return usersResponse.results
+    try httpHelper.validateResponse(response)
+    return try JSONDecoder().decode(UserListResponse.self, from: data).results
   }
 
   /// Retrieves a specific User by their unique identifier.
@@ -27,11 +26,10 @@ extension NotionClient {
   /// - Throws: An error if the request fails.
   public func user(userId: String) async throws -> NotionUser {
     let url = URL(string: "\(baseURL)/users/\(userId)")!
-    let request = createRequest(baseHeader: self.baseHeader, url: url, method: "GET")
+    let request = httpHelper.get(baseHeader: self.baseHeader, url: url)
     let (data, response) = try await URLSession.shared.data(for: request)
-    try validateResponse(response)
-    let user = try JSONDecoder().decode(NotionUser.self, from: data)
-    return user
+    try httpHelper.validateResponse(response)
+    return try JSONDecoder().decode(NotionUser.self, from: data)
   }
 
   /// Retrieves the bot User associated with the API token provided in the authorization header.
@@ -42,10 +40,9 @@ extension NotionClient {
   /// - Throws: An error if the request fails.
   public func me() async throws -> NotionUser {
     let url = URL(string: "\(baseURL)/users/me")!
-    let request = createRequest(baseHeader: self.baseHeader, url: url, method: "GET")
+    let request = httpHelper.get(baseHeader: self.baseHeader, url: url)
     let (data, response) = try await URLSession.shared.data(for: request)
-    try validateResponse(response)
-    let user = try JSONDecoder().decode(NotionUser.self, from: data)
-    return user
+    try httpHelper.validateResponse(response)
+    return try JSONDecoder().decode(NotionUser.self, from: data)
   }
 }
