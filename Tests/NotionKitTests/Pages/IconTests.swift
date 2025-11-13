@@ -12,6 +12,17 @@ class IconTests: XCTestCase {
     client = try setupClient()
   }
 
+  func testPageNotionIcon() async throws {
+    let page = try await client?.search()
+    let aaaa = page?.results.filter({ page in page.getTitle() == "AAAA"
+    }).first
+    if case .file(let notionIcon) = aaaa?.icon {
+      XCTAssert(notionIcon.type == .external)
+    } else {
+      XCTFail("Expected Notion icon")
+    }
+  }
+
   func testPageIconNone() async throws {
     let page = try await client?.search()
     let aaaa = page?.results.filter({ page in page.getTitle() == "DDDD"

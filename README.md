@@ -13,9 +13,7 @@ Unofficial iOS/macOS SDK for the Notion API.
 
 ## Overview
 
-This SDK provides a Swift interface to interact with the Notion API.
-
-This SDK is update on Notion API "**2025-09-03**" with baseURL `https://api.notion.com/v1`.
+This SDK provides a Swift interface to interact with the Notion API up to "**2025-09-03**" version with baseURL `https://api.notion.com/v1`.
 
 ## Setup
 

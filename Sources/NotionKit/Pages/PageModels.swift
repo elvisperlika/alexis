@@ -92,7 +92,7 @@ public struct FileObject: Codable {
   let file: File?
   /// if `type == "file_upload"`
   let fileUpload: FileUpload?
-  /// if `type == "external"`
+  /// if `type == "external"` (Notion's icons)
   let external: External?
 
   enum CodingKeys: String, CodingKey {
