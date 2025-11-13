@@ -33,7 +33,7 @@ extension NotionClient {
       startCursor: startCursor,
       pageSize: pageSize
     )
-    let request = httpHelper.post(baseHeader: baseHeader, url: url, body: body)
+    let request = httpHelper.post(baseHeader: self.baseHeader, url: url, body: body)
     let (data, response) = try await URLSession.shared.data(for: request)
     try httpHelper.validateResponse(response)
     return try JSONDecoder().decode(SearchResponse.self, from: data)

@@ -3,11 +3,11 @@ import Foundation
 class HTTPHelper {
 
   enum HTTPMethod: String {
-    case GET = "GET"
-    case PUT = "PUT"
-    case POST = "POST"
-    case PATCH = "PATCH"
-    case DELETE = "DELETE"
+    case GET
+    case PUT
+    case POST
+    case PATCH
+    case DELETE
   }
 
   func post(baseHeader: [String: String], url: URL, body: Data) -> URLRequest {
@@ -23,7 +23,7 @@ class HTTPHelper {
   /// - Parameters:
   ///   - baseHeader: A dictionary of header fields and their values.
   ///   - url: The URL for the request.
-  ///   - method: The HTTP method (e.g., "GET", "POST").
+  ///   - method: The HTTP method.
   /// - Returns: A configured URLRequest.
   private func createRequest(
     baseHeader: [String: String],
