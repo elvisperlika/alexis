@@ -11,6 +11,8 @@ on:
 jobs:
   test:
     runs-on: macos-latest
+    
+    if: github.event_name != 'push' || github.event.pull_request == null
 
     steps:
       - name: Checkout repository
