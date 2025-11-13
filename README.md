@@ -13,9 +13,7 @@ Unofficial iOS/macOS SDK for the Notion API.
 
 ## Overview
 
-This SDK provides a Swift interface to interact with the Notion API.
-
-This SDK is update on Notion API "**2025-09-03**" with baseURL `https://api.notion.com/v1`.
+This SDK provides a Swift interface to interact with the Notion API up to "**2025-09-03**" version with baseURL `https://api.notion.com/v1`.
 
 ## Setup
 
@@ -119,4 +117,23 @@ if let nextCursor = firstResponse?.nextCursor {
     let secondResponse = try await client?.search(startCursor: nextCursor, pageSize: 10)
     let otherPages = secondResponse?.results
 }
+```
+
+To have a more convenient way to handle pagination, you can use the
+``SearchPaginator`` helper:
+
+```swift
+let paginator = SearchPaginator(client: client!, size: 5)
+/// Default page size is 10, but you can customize it.
+let response = try await paginator.nextResponse()
+let nextResponse = try await paginator.nextResponse()
+let nextNextResponse = try await paginator.nextResponse()
+```
+
+Do you want to fetch all pages at once? Use the
+``fetchAllPages()`` method (it will handle pagination for you):
+
+```swift
+let paginator = SearchPaginator(client: client!)
+let allPages = try await paginator.fetchAllPages()
 ```

@@ -18,8 +18,10 @@ public struct NotionPage: Codable {
   /// Indicates whether the page is in the trash
   let inTrash: Bool
   /// Page icon
-  let icon: String?  // TODO: it's a File Object
-  let cover: String?  // TODO: it's a File Object
+  let icon: PageIcon?
+  /// Page cover
+  let cover: FileObject?
+  /// Page properties
   let properties: PageProperties
   /// Parent information
   let parent: Parent
@@ -38,6 +40,91 @@ public struct NotionPage: Codable {
     case lastEditedTime = "last_edited_time"
     case publicUrl = "public_url"
   }
+}
+
+// TODO: to test and verify
+public enum PageIcon: Codable {
+  case file(FileObject)
+  case emoji(EmojiObject)
+
+  enum CodingKeys: String, CodingKey {
+    case type
+  }
+
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    let type = try container.decode(String.self, forKey: .type)
+
+    let singleContainer = try decoder.singleValueContainer()
+
+    switch type {
+    case "emoji":
+      let emojiObject = try singleContainer.decode(EmojiObject.self)
+      self = .emoji(emojiObject)
+    default:  // "external", "file_upload"
+      let fileObject = try singleContainer.decode(FileObject.self)
+      self = .file(fileObject)
+    }
+  }
+
+  public func encode(to encoder: Encoder) throws {
+    switch self {
+    case .file(let fileObject):
+      try fileObject.encode(to: encoder)
+    case .emoji(let emojiObject):
+      try emojiObject.encode(to: encoder)
+    }
+  }
+}
+
+public struct EmojiObject: Codable {
+  /// Always "emoji"
+  let type: String
+  /// The emoji character
+  let emoji: String
+}
+
+/// Page Icon
+public struct FileObject: Codable {
+  /// Values: "external", "file", "file_upload"
+  let type: FileType
+  /// if `type == "file"`
+  let file: File?
+  /// if `type == "file_upload"`
+  let fileUpload: FileUpload?
+  /// if `type == "external"` (Notion's icons)
+  let external: External?
+
+  enum CodingKeys: String, CodingKey {
+    case type, file, external
+    case fileUpload = "file_upload"
+  }
+
+  public enum FileType: String, Codable {
+    case external, file
+    case fileUpload = "file_upload"
+  }
+}
+
+// Notion-hosted file (uploaded via UI)
+public struct File: Codable {
+  let url: String
+  let expiryTime: String
+
+  enum CodingKeys: String, CodingKey {
+    case url
+    case expiryTime = "expiry_time"
+  }
+}
+
+// File uploaded via the Notion API
+public struct FileUpload: Codable {
+  let id: NotionID
+}
+
+// External file
+public struct External: Codable {
+  let url: String
 }
 
 public struct PartialUser: Codable {

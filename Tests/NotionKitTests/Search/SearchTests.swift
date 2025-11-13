@@ -15,7 +15,7 @@ class SearchTests: XCTestCase {
   func testSearchAllPages() async throws {
     let pages = try await client?.search().results ?? []
     XCTAssertEqual(
-      Set([Optional("BBBB"), Optional("AAAA")]),
+      Set([Optional("BBBB"), Optional("AAAA"), Optional("CCCC"), Optional("DDDD")]),
       Set(pages.map({ page in page.properties.title.title.first?.plainText }))
     )
   }
@@ -24,7 +24,7 @@ class SearchTests: XCTestCase {
     let filter: SearchFilter = SearchFilter(value: .page, property: .object)
     let pages: NotionPages = try await client?.search(filter: filter).results ?? []
     XCTAssertEqual(
-      Set([Optional("BBBB"), Optional("AAAA")]),
+      Set([Optional("BBBB"), Optional("AAAA"), Optional("CCCC"), Optional("DDDD")]),
       Set(pages.map({ page in page.properties.title.title.first?.plainText }))
     )
   }
@@ -44,17 +44,15 @@ class SearchTests: XCTestCase {
   func testAscendingSortSearch() async throws {
     let sort = SearchSort(direction: .ascending, timestamp: .lastEditedTime)
     let pages = try await client?.search(sort: sort).results ?? []
-    XCTAssertEqual(2, pages.count)
-    XCTAssertEqual("AAAA", pages.first?.properties.title.title.first?.plainText)
-    XCTAssertEqual("BBBB", pages.last?.properties.title.title.first?.plainText)
+    let dates = pages.map { $0.lastEditedTime }
+    XCTAssertEqual(dates, dates.sorted())
   }
 
   func testDescendingSortSearch() async throws {
     let sort = SearchSort(direction: .descending, timestamp: .lastEditedTime)
     let pages = try await client?.search(sort: sort).results ?? []
-    XCTAssertEqual(2, pages.count)
-    XCTAssertEqual("BBBB", pages.first?.properties.title.title.first?.plainText)
-    XCTAssertEqual("AAAA", pages.last?.properties.title.title.first?.plainText)
+    let dates = pages.map { $0.lastEditedTime }
+    XCTAssertEqual(dates, dates.sorted(by: >))
   }
 
   func testPageSizeLimit() async throws {
